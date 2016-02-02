@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../bower_components/jquery/dist/jquery.js"></script>
+	<style>
+		.bg-red{
+			background-color: red;
+		}
+
+	</style>
+</head>
+<body>
+	<button id="select-all">全选</button>
+	<label>
+		angular
+		<input type="checkbox" class="checkbox" value="angular"/>
+	</label>
+	<label>
+		jquery
+		<input type="checkbox" class="checkbox" value="jquery"/>
+	</label>
+	<label>
+		backbone
+		<input type="checkbox" class="checkbox" value="backbone"/>
+	</label>
+	<label>
+		css
+		<input type="checkbox" class="checkbox" value="css"/>
+	</label>
+
+	<script>
+		$(function() {
+			var $btn = $('#select-all');
+
+			$('.checkbox').change(function(e) {
+				//方法一
+				// if($('.checkbox:checked').size() === $('.checkbox').size()) {
+				// 	$btn.addClass('bg-red');
+				// } else {
+				// 	$btn.removeClass();
+				// }
+
+				//方法二
+				// if($('.checkbox').not(':checked').size() === 0) {
+				// 	$btn.addClass('bg-red');
+				// } else {
+				// 	$btn.removeClass();
+				// }
+
+				//方法二简写
+				$btn[$('.checkbox').not(':checked').size() === 0 ? 'addClass' : 'removeClass']('bg-red');
+			}) 
+		});
+	</script>
+</body>
+</html>

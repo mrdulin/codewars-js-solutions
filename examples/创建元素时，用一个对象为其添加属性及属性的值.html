@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>创建元素时，用一个对象为其添加属性及属性的值</title>
+    <link rel="stylesheet" href="../bower_components/Materialize/dist/css/materialize.css"/>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/Materialize/dist/js/materialize.js"></script>
+</head>
+<body>
+
+<script>
+    $(function() {
+
+        $('<a>', {
+            id: 'google',
+            href: 'http://www.google.com.hk',
+            "class": "blue-text text-darken-2",
+            text: 'google',
+            css: {
+                fontSize: '30px'
+            },
+            mouseover: function() {
+                var $tip = $('p');
+                if($tip.length > 0) {
+                    $tip.show();
+                } else {
+                    $('<p class="red-text text-darken-1">这是一个链接</p>').appendTo($(document.body));
+                }
+            },
+            on: {
+                mouseout: function() {
+                    $('p').hide();
+                }
+            }
+        }).appendTo('body');
+
+    });
+</script>
+</body>
+</html>

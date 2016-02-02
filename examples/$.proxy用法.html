@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>$.proxy用法</title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+
+<div id="panel" style="display:none">
+    <button>Close</button>
+</div>
+
+<script>
+    $(function() {
+
+        //没有达到效果
+//        test1();
+        function test1() {
+            $('#panel').fadeIn(function(){
+                // this points to #panel
+                $('#panel button').click(function(){
+                    // this points to the button
+                    $(this).fadeOut();
+                });
+            });
+        }
+
+
+
+        //达到效果
+        //proxy返回一个新的函数，将上下文(this)指向传入的上下文。
+        test2();
+        function test2() {
+            $('#panel').fadeIn(function(){
+                // Using $.proxy to bind this:
+
+                $('#panel button').click($.proxy(function(){
+                    // this points to #panel
+                    $(this).fadeOut();
+
+                },this));
+            });
+        }
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+<script>
+    $(function() {
+        //$.grep可以过滤数组，不管是jquery对象组成的数组还是数据中的数组
+        var arr = [1, 2, 6, 0, 2, 3];
+        var trueArr = $.grep(arr, grep, false);
+        var falseArr = $.grep(arr, grep, true);
+
+        function grep(el, index) {
+            return !!el;
+        }
+
+        $('body').html(trueArr.join(',') + '<br/>' + falseArr.join(','));
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>获取select标签选中的option的文本</title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+
+<select id="mySelect">
+    <option value="shanghai">上海</option>
+    <option value="chengdu" selected="selected">成都</option>
+    <option value="beijing">北京</option>
+    <option value="hangzhou">杭州</option>
+</select>
+
+<script>
+    $(function() {
+
+        var $select = $('#mySelect');
+
+        //方法一
+        alert($('option:selected', $select).text());
+
+        //方法二
+        alert($select.find(':selected').text());
+
+        //方法三
+        alert($select.children('option').filter(':selected').text());
+
+        //方法四
+        alert($select.children(':selected').text());
+
+    });
+</script>
+</body>
+</html>

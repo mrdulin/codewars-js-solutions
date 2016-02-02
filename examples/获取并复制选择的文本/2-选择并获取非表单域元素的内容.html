@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选择并获取非表单域元素的内容</title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+<div>
+    <p id="para">"My mama always said, 'Life was like a box of chocolates. You never know what you're gonna get.'" -Forrest</p>
+    <button id="selectButton">选择文本</button>
+</div>
+<script>
+    $(function() {
+
+        //选择并获取非表单域元素的内容
+        function getSelectText() {
+            var selectText = "";
+            if(window.getSelection) {
+                console.log(window.getSelection());
+                selectText = window.getSelection().toString();
+            }
+
+            return selectText;
+        }
+
+        function selectElementText(el){
+            var range = document.createRange() // create new range object
+            range.selectNodeContents(el) // set range to encompass desired element text
+            var selection = window.getSelection() // get Selection object from currently user selected text
+            selection.removeAllRanges() // unselect any user selected text (if any)
+            selection.addRange(range) // add range to Selection object to select it
+        }
+
+        $('#selectButton').on('click', selectButtonClickHandler);
+
+        function selectButtonClickHandler() {
+            var para = document.getElementById('para')
+            selectElementText(para) // select the element's text we wish to read
+            var paraText = getSelectText() // read the user selection
+            alert(paraText) // alerts "My mama always says..."
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>form submit - 4</title>
+    <link rel="stylesheet" href="../../bower_components/Materialize/dist/css/materialize.css"/>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../../bower_components/Materialize/dist/js/materialize.js"></script>
+</head>
+<body>
+<div class="container">
+
+    <!-- 第四种方式 (使用jQuery中表单form的submit()方法)-->
+    <!-- 该方式混用了jQuery方法和原生DOM方法 -->
+    <!-- 注意观察和第三种方式的不同 -->
+
+    <div class="row">
+        <form id="myForm" action="../../data/data.json" method="post" class="col s12" enctype="application/x-www-form-urlencoded">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="first_name" type="text" placeholder="姓氏" class="validate" name="first_name"/>
+                    <label for="first_name">姓氏</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="last_name" type="text" placeholder="名字" class="validate" name="last_name"/>
+                    <label for="last_name">名字</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="disabled" type="text" value="不可编辑" class="validate" disabled/>
+                    <label for="disabled">不可编辑</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate" name="password"/>
+                    <label for="password">密码</label>
+                </div>
+                <div class="input-field col s12">
+                    <input type="text" id="email" class="validate" name="email"/>
+                    <label for="email">邮箱</label>
+                </div>
+            </div>
+
+            <!-- 此处再次使用了type为submit的提交按钮，触发了表单form的submit事件（事件使用jQuery捕获）-->
+            <!--<button type="submit" class="btn waves-light waves-effect">提交</button>-->
+        </form>
+    </div>
+
+    <a id="submit" class="btn waves-light waves-effect">提交</a>
+    <p id="error" class="red-text text-darken-1"></p>
+
+</div>
+
+<script>
+    $(function() {
+
+        var $formElem = $('#myForm');
+        var $errorElem = $('#error');
+        var $submit = $('#submit');
+
+        //jQuery捕获表单submit事件,与type类型为submit的提交按钮配合使用
+//        $formElem.submit(submitHandler);
+
+
+        //或者，与id为submit的按钮配合使用
+        $submit.click(function() {
+            $formElem.trigger('submit');
+        });
+        $formElem.submit(submitHandler);
+
+
+        function submitHandler(e) {
+            e.preventDefault();
+            var formElem = this;
+
+            if(!formElem.first_name.value) {
+                return showError(formElem.first_name, '姓氏不能为空');
+            } else if(!formElem.last_name.value) {
+                return showError(formElem.last_name, '名字不能为空');
+            } else if(!formElem.password.value) {
+                return showError(formElem.password, '密码不能为空');
+            } else if(!formElem.email.value) {
+                return showError(formElem.email, '邮箱不能为空');
+            } else {
+                hideError();
+                formElem.submit();
+            }
+        }
+
+        function showError(inputElem, msg) {
+            $errorElem.text(msg);
+
+            //此处的inputElem是DOM对象，不是jQuery对象。
+            inputElem.focus();
+            return false;
+        }
+
+        function hideError() {
+            $errorElem.text('');
+        }
+
+    });
+</script>
+</body>
+</html>

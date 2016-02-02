@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+<div>
+    <textarea name="selectArea" id="selectArea" cols="30" rows="10"></textarea>
+    <p>选择我，复制我</p>
+</div>
+<script>
+    $(function() {
+
+        //获取用户选择的文本
+        function getSelectText() {
+            var selectText = "";
+            if(window.getSelection) {
+                console.log(window.getSelection());
+                selectText = window.getSelection().toString();
+            }
+
+            return selectText;
+        }
+
+        $(document).on('mouseup', docMouseUpHandler);
+
+        function docMouseUpHandler(e) {
+            var text = getSelectText();
+            if(text.length > 0) {
+                $('#selectArea').val(text);
+            }
+        }
+
+    });
+</script>
+</body>
+</html>
