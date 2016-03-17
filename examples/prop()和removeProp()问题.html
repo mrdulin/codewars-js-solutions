@@ -5,7 +5,7 @@
     <title></title>
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <style>
-        .test{
+        .test {
             color: lightblue;
         }
     </style>
@@ -17,7 +17,7 @@
 <button id="removeDisableBtn">移除input的disabled属性</button>
 <button id="addDisableBtn">添加input的disabled属性</button>
 <script>
-    $(function() {
+    $(function () {
 
         var $input = $('#name');
         var $disableBtn = $('#disableBtn');
@@ -51,7 +51,7 @@
             //有效
             $input.prop('customProperty', 'WTF');
             console.log($input.prop('customProperty'));
-            setTimeout(function() {
+            setTimeout(function () {
                 $input.removeProp('customProperty');
                 console.log($input.prop('customProperty'));
             }, 3000);

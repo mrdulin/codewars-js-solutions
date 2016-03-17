@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>使用JavaScript设置CSS3属性</title>
     <style>
-        #myDiv{
+        #myDiv {
             width: 100px;
             height: 100px;
             background-color: lightblue;
         }
-        #myButton{
+
+        #myButton {
             padding: 6px 10px;
             border: 1px solid #000;
             background-color: lightgreen;
@@ -52,8 +53,8 @@
         var root = document.documentElement;
         console.log(root);
         console.log(root.style);
-        for(var i = 0; i < propArray.length; i++) {
-            if(propArray[i] in root.style) {
+        for (var i = 0; i < propArray.length; i++) {
+            if (propArray[i] in root.style) {
                 return propArray[i];
             }
         }
@@ -67,7 +68,7 @@
     }
 
     function changeCssProperty(el, prop, value, action) {
-        if(typeof prop !== 'undefined') {
+        if (typeof prop !== 'undefined') {
             el.style[prop] = (action === 'remove') ? '' : value;
         }
     }

@@ -11,7 +11,7 @@
 <body>
 
 <script>
-    $(function() {
+    $(function () {
 
         $('<a>', {
             id: 'google',
@@ -21,16 +21,16 @@
             css: {
                 fontSize: '30px'
             },
-            mouseover: function() {
+            mouseover: function () {
                 var $tip = $('p');
-                if($tip.length > 0) {
+                if ($tip.length > 0) {
                     $tip.show();
                 } else {
                     $('<p class="red-text text-darken-1">这是一个链接</p>').appendTo($(document.body));
                 }
             },
             on: {
-                mouseout: function() {
+                mouseout: function () {
                     $('p').hide();
                 }
             }

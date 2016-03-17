@@ -39,19 +39,22 @@
         <div class="col s12">
             <form>
                 <p>
-                    <input name="group1" type="radio" id="test1" value="test1" />
+                    <input name="group1" type="radio" id="test1" value="test1"/>
                     <label for="test1">Red</label>
                 </p>
+
                 <p>
                     <input name="group1" type="radio" id="test2" value="test2"/>
                     <label for="test2">Yellow</label>
                 </p>
+
                 <p>
-                    <input class="with-gap" name="group1" type="radio" id="test3" value="test3" />
+                    <input class="with-gap" name="group1" type="radio" id="test3" value="test3"/>
                     <label for="test3">Green</label>
                 </p>
+
                 <p>
-                    <input name="group1" type="radio" id="test4" disabled="disabled" />
+                    <input name="group1" type="radio" id="test4" disabled="disabled"/>
                     <label for="test4">Brown</label>
                 </p>
             </form>
@@ -65,16 +68,19 @@
                     <input type="checkbox" id="test5" value="test5"/>
                     <label for="test5">Red</label>
                 </p>
+
                 <p>
-                    <input type="checkbox" id="test6"  value="test6"/>
+                    <input type="checkbox" id="test6" value="test6"/>
                     <label for="test6">Yellow</label>
                 </p>
+
                 <p>
                     <input type="checkbox" id="test7" checked="checked" disabled="disabled" value=""/>
                     <label for="test7">Green</label>
                 </p>
+
                 <p>
-                    <input type="checkbox" id="test8" disabled="disabled" />
+                    <input type="checkbox" id="test8" disabled="disabled"/>
                     <label for="test8">Brown</label>
                 </p>
             </form>
@@ -83,9 +89,8 @@
 </div>
 
 
-
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         var $single = $('#single');
         var $multiple = $('#multiple');
@@ -109,7 +114,7 @@
 
         function getCheckboxValue() {
             var $checkedBoxs = $checkboxs.filter(':checked');
-            var values = $checkedBoxs.map(function() {
+            var values = $checkedBoxs.map(function () {
                 return $(this).val();
             }).get();
             console.log(values);

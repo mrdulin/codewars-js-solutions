@@ -76,10 +76,10 @@
                 var scrollTop = $smWin.scrollTop();
                 //元素可视区域高度
                 var elViewHeight = $smWin.height();
-                    //包含元素滚动区域 + 可视区域 = 整体高度
+                //包含元素滚动区域 + 可视区域 = 整体高度
                 var elEntireHeight = $smWin.prop('scrollHeight');
 
-                    //元素滚动区域高度 = 整体高度 - 可视区域高度
+                //元素滚动区域高度 = 整体高度 - 可视区域高度
                 var sHeight = elEntireHeight - elViewHeight;
 
                 var percentScroll = Math.floor(scrollTop / sHeight * 100);
@@ -106,7 +106,7 @@
             var elEntireHeight = this.scrollHeight;
             var sHeight = elEntireHeight - elViewHeight;
             var percentScroll = Math.floor(scrollTop / sHeight * 100);
-            setScrollTextJS(scrollText, scrollTop, percentScroll);;
+            setScrollTextJS(scrollText, scrollTop, percentScroll);
         }
 
         function setScrollTextJS(el, px, percent) {

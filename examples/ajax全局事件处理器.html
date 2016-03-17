@@ -11,13 +11,13 @@
 <div id="result"></div>
 <div id="log"></div>
 <script>
-    $(function() {
+    $(function () {
 
-        var correctUrl = './template.html',
-            wrongUrl = './wrong.html';
+        var correctUrl = './template.html';
+        var wrongUrl = './wrong.html';
 
-        var $reqBtn = $('#request-btn'),
-            $log = $('#log');
+        var $reqBtn = $('#request-btn');
+        var $log = $('#log');
 
         $reqBtn.click(clickHandler);
 
@@ -39,17 +39,17 @@
         function ajaxSuccess(event, XMLHttpRequest, ajaxOptions) {
             console.log(event, XMLHttpRequest, ajaxOptions);
             console.log('ajaxSuccess');
-            $log.text( "Triggered ajaxSuccess handler." );
+            $log.text("Triggered ajaxSuccess handler.");
         }
 
         function ajaxStop() {
             console.log('ajaxStop');
-            $log.text( "Triggered ajaxStop handler." );
+            $log.text("Triggered ajaxStop handler.");
         }
 
         function ajaxStart() {
             console.log('ajaxStart');
-            $log.text( "Triggered ajaxStart handler." );
+            $log.text("Triggered ajaxStart handler.");
         }
 
         //请求发送之前触发
@@ -65,7 +65,7 @@
         function ajaxComplete(event, XMLHttpRequest, ajaxOptions) {
             console.log(event, XMLHttpRequest, ajaxOptions);
             console.log('ajaxComplete');
-            if(ajaxOptions.url === correctUrl) {
+            if (ajaxOptions.url === correctUrl) {
                 $log.text("Triggered ajaxComplete handler.");
             }
         }

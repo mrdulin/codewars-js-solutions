@@ -7,11 +7,12 @@
 </head>
 <body>
 <input id="uploadInput" type="file"/>
+
 <div>
     <img id="preview" src="" alt=""/>
 </div>
 <script>
-    $(function() {
+    $(function () {
 
         $('#uploadInput').on('change', uploadInputChange);
 
@@ -21,37 +22,37 @@
             var rFilter = /^image\//;
             var file = fileList[0];
 
-            if(fileList.length === 0) return;
-            if(!rFilter.test(file.type)) {
+            if (fileList.length === 0) return;
+            if (!rFilter.test(file.type)) {
                 alert('文件格式必须是图片！');
                 return;
             }
 
-            fr.onloadstart = function(se) {
+            fr.onloadstart = function (se) {
                 console.log('onloadStart event:', se);
                 alert('开始加载图片');
             };
 
-            fr.onprogress = function(pe) {
+            fr.onprogress = function (pe) {
                 console.log('onprogress event:', pe);
 
-                if(pe.lengthComputable)  {
+                if (pe.lengthComputable) {
                     var percent = pe.loaded / pe.total * 100
                     console.log('loaded:', pe.loaded);
                     console.log('loaded percent:' + percent + '%');
                 }
 
                 //无效
-                if(percent < 80) {
+                if (percent < 80) {
                     fr.abort();
                 }
             };
 
-            fr.onabort = function(ae) {
+            fr.onabort = function (ae) {
                 console.log('onabort event:', ae);
             };
 
-            fr.onload = function(frEvent) {
+            fr.onload = function (frEvent) {
                 console.log(frEvent);
                 console.log(fr);
                 //1.
@@ -61,15 +62,15 @@
                 $('#preview').attr('src', fr.result);
             };
 
-            fr.onloadend = function(ee) {
+            fr.onloadend = function (ee) {
                 console.log('onloadend event:', ee);
                 alert('加载结束');
             };
 
             //如何触发onerror事件？
 
-            fr.onerror = function(errEvent) {
-                switch(errEvent.target.error.code){
+            fr.onerror = function (errEvent) {
+                switch (errEvent.target.error.code) {
 
                 }
             };

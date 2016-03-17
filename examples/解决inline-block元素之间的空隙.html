@@ -7,15 +7,15 @@
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <style>
         span, ul > li {
-            display:inline-block;
-            width:100px;
-            background:blue;
-            font-size:30px;
-            color:white;
-            text-align:center;
+            display: inline-block;
+            width: 100px;
+            background: blue;
+            font-size: 30px;
+            color: white;
+            text-align: center;
         }
 
-        #test2{
+        #test2 {
             font-size: 0;
         }
 
@@ -55,16 +55,24 @@
 
 <!-- 解决方法一 -->
 <ul>
-    <li>Item 1</li
-    ><li>Item 2</li
-    ><li>Item 3</li>
+    <li>Item 1
+    </li
+            >
+    <li>Item 2
+    </li
+            >
+    <li>Item 3</li>
 </ul>
 
 <!-- 解决方法二 -->
 <ul>
-    <li>Item 1</li><!--
-    --><li>Item 2</li><!--
-    --><li>Item 3</li>
+    <li>Item 1</li>
+    <!--
+        -->
+    <li>Item 2</li>
+    <!--
+        -->
+    <li>Item 3</li>
 </ul>
 
 <!-- 解决方法三 -->
@@ -75,11 +83,11 @@
 </ul>
 
 <script>
-    $(function() {
+    $(function () {
 
         $('#test')
                 .contents()
-                .filter(function() {
+                .filter(function () {
                     //过滤出文本节点
                     return this.nodeType === 3;
                 })

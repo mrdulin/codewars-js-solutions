@@ -13,34 +13,32 @@
 </div>
 
 <script>
-    $(function() {
+    $(function () {
 
         //没有达到效果
 //        test1();
         function test1() {
-            $('#panel').fadeIn(function(){
+            $('#panel').fadeIn(function () {
                 // this points to #panel
-                $('#panel button').click(function(){
+                $('#panel button').click(function () {
                     // this points to the button
                     $(this).fadeOut();
                 });
             });
         }
 
-
-
         //达到效果
         //proxy返回一个新的函数，将上下文(this)指向传入的上下文。
         test2();
         function test2() {
-            $('#panel').fadeIn(function(){
+            $('#panel').fadeIn(function () {
                 // Using $.proxy to bind this:
 
-                $('#panel button').click($.proxy(function(){
+                $('#panel button').click($.proxy(function () {
                     // this points to #panel
                     $(this).fadeOut();
 
-                },this));
+                }, this));
             });
         }
 

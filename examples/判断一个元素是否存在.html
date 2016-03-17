@@ -5,7 +5,7 @@
     <title></title>
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <style>
-        #myButton{
+        #myButton {
             display: none;
         }
     </style>
@@ -14,17 +14,17 @@
 <button id="myButton" type="button">myButton</button>
 <p id="tip"></p>
 <script>
-    $(function() {
+    $(function () {
         var $myButton = $('#myButton');
 
-        if($myButton.length) {
+        if ($myButton.length) {
             $myButton.show(2000, buttonShowComplete);
         }
 
-
         function buttonShowComplete() {
-            if($('#yourButton').length) {
-                $('#yourButton').show();
+            var $yourButton = $('#yourButton');
+            if ($yourButton.length) {
+                $yourButton.show();
             } else {
                 $('#tip').text('your button does not exist');
             }
