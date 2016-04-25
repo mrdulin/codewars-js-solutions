@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>2级联动城市选择</title>
+    <meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" name="viewport">
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" href="./cityPicker.css"/>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+    <script src="./cityPicker.js"></script>
+</head>
+<body>
+
+<button id="showRollerPicker">显示cityPicker组件</button>
+
+<p><i>省：</i>&nbsp;<strong id="provinceText"></strong></p>
+
+<p><i>市：</i>&nbsp;<strong id="cityText"></strong></p>
+
+<div class="test"></div>
+<div id="rollerPicker" class="g-roller-ctn">
+    <div class="m-roller-box"></div>
+</div>
+<script>
+    $(function () {
+        var $rollerPicker = $('#rollerPicker')
+        $rollerPicker.rollerPicker({
+            url: './data.json',
+            callback: function (data) {
+                $('#provinceText').text(data[0].value)
+                $('#cityText').text(data[1].value)
+            }
+        })
+
+        $('#showRollerPicker').click(function () {
+            $('#rollerPicker').show();
+        });
+    });
+</script>
+</body>
+</html>

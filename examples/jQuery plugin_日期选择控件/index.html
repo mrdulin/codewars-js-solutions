@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>datePicker</title>
+    <link rel="stylesheet" href="datePicker.css"/>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+    <script src="http://mockjs.com/dist/mock.js"></script>
+    <script src="datePicker.js"></script>
+</head>
+<body>
+<button id="openDatePicker">打开日期控件</button>
+<p><i>日期:</i><strong id="date"></strong></p>
+
+
+<div id="dpContainer" class="g-dp-ctn"></div>
+<script>
+    $(function () {
+        $dp = $('#dpContainer');
+        $dp.datePicker({
+            url: './data.json',
+            callback: function (data) {
+                day = data.date[4]
+                $('#date').text(data.formatDate + ' ' + day)
+            }
+        });
+        $('#openDatePicker').click(function (e) {
+            $dp.show()
+        });
+    });
+</script>
+</body>
+</html>
