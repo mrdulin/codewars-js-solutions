@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+
+<script>
+    $.ready.promise().done(onReady);
+
+    function onReady() {
+
+        var getPromise = $.get('../../data/request1.json');
+
+        var postPromise = getPromise.pipe(function(data) {
+            return $.post('../../data/request2.json', data);
+        });
+    }
+</script>
+</body>
+</html>
