@@ -13,9 +13,12 @@
         var $myDiv = $('#myDiv');
 
         //方法一：
+        //chrome 开发者工具 - Profiles会生成一个profile，检查运行效率和函数执行时间
+        console.profile();
         if($myDiv.hasClass('awesome')) {
             console.log('myDiv has awesome class');
         }
+        console.profileEnd();
 
         //方法二：
         if($myDiv.is('.awesome')) {
