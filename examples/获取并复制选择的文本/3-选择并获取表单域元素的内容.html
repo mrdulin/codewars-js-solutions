@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选择并获取表单域元素的内容</title>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+<div>
+    <input id="myInput" type="text" value="'Stupid is as stupid does.' -Forrest Gump" style="width: 300px;"/>
+
+    <div>
+        <button id="selectFirstFiveBtn">选择开始的5个字符</button>
+        <button id="selectLastFiveBtn">选择结尾的5个字符</button>
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+
+        var $selectFirstFiveBtn = $('#selectFirstFiveBtn');
+        var $selectLastFiveBtn = $('#selectLastFiveBtn');
+        var $myInput = $('#myInput');
+
+        $selectLastFiveBtn.on('click', selectLastFiveBtnClickHandler);
+        $selectFirstFiveBtn.on('click', selectFirstFiveBtnClickHandler);
+
+        function selectLastFiveBtnClickHandler() {
+            var inputLen = $myInput.val().length;
+            $myInput.focus();
+            $myInput.get(0).setSelectionRange(inputLen - 5, inputLen);
+            //选择字符的在整个文本中的索引，selectionStart开始索引，selectionEnd结束索引
+            console.log($myInput.get(0).selectionStart, $myInput.get(0).selectionEnd);
+        }
+
+        function selectFirstFiveBtnClickHandler() {
+            $myInput.focus();
+            $myInput.get(0).setSelectionRange(0, 5);
+        }
+
+    })
+</script>
+</body>
+</html>

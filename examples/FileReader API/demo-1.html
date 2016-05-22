@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>单个图片上传预览readAsDataURL</title>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+<input id="uploadInput" type="file"/>
+
+<div>
+    <img id="preview" src="" alt=""/>
+</div>
+<script>
+    $(function () {
+
+        $('#uploadInput').on('change', uploadInputChange);
+
+        function uploadInputChange(e) {
+            var fr = new FileReader();
+            var fileList = this.files;
+            var rFilter = /^image\//;
+            var file = fileList[0];
+
+            if (fileList.length === 0) return;
+            if (!rFilter.test(file.type)) {
+                alert('文件格式必须是图片！');
+                return;
+            }
+
+            fr.onloadstart = function (se) {
+                console.log('onloadStart event:', se);
+                alert('开始加载图片');
+            };
+
+            fr.onprogress = function (pe) {
+                console.log('onprogress event:', pe);
+
+                if (pe.lengthComputable) {
+                    var percent = pe.loaded / pe.total * 100
+                    console.log('loaded:', pe.loaded);
+                    console.log('loaded percent:' + percent + '%');
+                }
+
+                //无效
+                if (percent < 80) {
+                    fr.abort();
+                }
+            };
+
+            fr.onabort = function (ae) {
+                console.log('onabort event:', ae);
+            };
+
+            fr.onload = function (frEvent) {
+                console.log(frEvent);
+                console.log(fr);
+                //1.
+//                $('#preview').attr('src', frEvent.target.result);
+
+                //2.
+                $('#preview').attr('src', fr.result);
+            };
+
+            fr.onloadend = function (ee) {
+                console.log('onloadend event:', ee);
+                alert('加载结束');
+            };
+
+            //如何触发onerror事件？
+
+            fr.onerror = function (errEvent) {
+                switch (errEvent.target.error.code) {
+
+                }
+            };
+
+            fr.readAsDataURL(file);
+
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <style>
+        #container {
+            width: 1000px;
+            height: 100px;
+            border: 1px solid #555;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<p class="para">jquery</p>
+
+<p class="para-ng">angular</p>
+
+<div id="container"></div>
+<button id="moveJqPara">移动jquery段落</button>
+<button id="moveNgPara">移动angular段落</button>
+<script>
+    $(function () {
+
+        $('#moveNgPara').on('click', function () {
+            var self = this;
+            var $ngPara = $('body > .para-ng');
+            var ngParaText = $ngPara.text();
+            $ngPara
+                    .clone()
+                    .on('click', ngParaClick)
+                    .appendTo('#container')
+                    .text($('.para-ng', '#container').length + '、' + ngParaText);
+        });
+
+        $('#moveJqPara').on('click', function () {
+            $('.para')
+                    .on('click', paraClick)
+                    .detach()
+                    .appendTo('#container');
+        });
+
+        function paraClick() {
+            $(this).css('color', 'lightBlue');
+        }
+
+        function ngParaClick() {
+            $(this).css('color', 'red');
+        }
+
+
+    });
+</script>
+</body>
+</html>

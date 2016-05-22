@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <style>
+        #myButton {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<button id="myButton" type="button">myButton</button>
+<p id="tip"></p>
+<script>
+    $(function () {
+        var $myButton = $('#myButton');
+
+        if ($myButton.length) {
+            $myButton.show(2000, buttonShowComplete);
+        }
+
+        function buttonShowComplete() {
+            var $yourButton = $('#yourButton');
+            if ($yourButton.length) {
+                $yourButton.show();
+            } else {
+                $('#tip').text('your button does not exist');
+            }
+        }
+
+    });
+</script>
+</body>
+</html>

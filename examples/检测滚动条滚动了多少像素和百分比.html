@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>检测滚动条滚动了多少像素</title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <style>
+        .small-window {
+            width: 400px;
+            height: 400px;
+            border: 1px solid #555;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="small-window">
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+
+    <p>dfafdasdffdsfadf</p>
+</div>
+<p id="scroll-text-jq"></p>
+
+<p id="scroll-text-js"></p>
+<script>
+    $(function () {
+
+        //jquery
+        var $scrollText = $('#scroll-text-jq');
+        var scrollTimer;
+        $('.small-window').on('scroll', scrollJqHandler);
+
+        setScrollTextJq($scrollText);
+
+        function scrollJqHandler(e) {
+            var self = this;
+            clearTimeout(scrollTimer);
+            //性能优化
+            scrollTimer = setTimeout(function () {
+                var $smWin = $(self);
+                //滚动条滚动距离顶部的距离
+                var scrollTop = $smWin.scrollTop();
+                //元素可视区域高度
+                var elViewHeight = $smWin.height();
+                //包含元素滚动区域 + 可视区域 = 整体高度
+                var elEntireHeight = $smWin.prop('scrollHeight');
+
+                //元素滚动区域高度 = 整体高度 - 可视区域高度
+                var sHeight = elEntireHeight - elViewHeight;
+
+                var percentScroll = Math.floor(scrollTop / sHeight * 100);
+
+                setScrollTextJq($scrollText, scrollTop, percentScroll);
+            }, 50);
+
+        }
+
+        function setScrollTextJq($el, px, percent) {
+            $el.text('滚动高度: ' + (px || 0) + 'px ,' + '滚动百分比: ' + (percent || 0) + '%');
+        }
+
+        //javascript
+        var smallWindow = document.querySelector('.small-window');
+        var scrollText = document.getElementById('scroll-text-js');
+
+        smallWindow.onscroll = scrollJsHandler;
+        setScrollTextJS(scrollText);
+
+        function scrollJsHandler(e) {
+            var scrollTop = this.scrollTop;
+            var elViewHeight = this.clientHeight;
+            var elEntireHeight = this.scrollHeight;
+            var sHeight = elEntireHeight - elViewHeight;
+            var percentScroll = Math.floor(scrollTop / sHeight * 100);
+            setScrollTextJS(scrollText, scrollTop, percentScroll);
+        }
+
+        function setScrollTextJS(el, px, percent) {
+            el.textContent = '滚动高度: ' + (px || 0) + 'px ,' + '滚动百分比: ' + (percent || 0) + '%';
+        }
+
+
+    });
+</script>
+</body>
+</html>
