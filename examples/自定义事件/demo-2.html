@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo-2</title>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+
+<div id="outer">
+    <span id="inner"></span>
+</div>
+
+<button type="button" id="triggerBtn">trigger</button>
+<button type="button" id="triggerHandlerBtn">triggerHandler</button>
+
+<script>
+    $.ready.promise().done(onReady);
+
+    function onReady() {
+
+        //自定义事件冒泡技术
+        $('#inner, #outer').on('work', function(e, data) {
+            console.log(this.id, data);
+        });
+
+        $('#triggerBtn').on('click', function() {
+            //trigger会让事件冒泡
+            $('#inner').trigger('work', 'google');
+        });
+
+        $('#triggerHandlerBtn').on('click', function() {
+            //triggerhandler不会让事件冒泡
+            $('#inner').triggerHandler('work', 'jquery');
+        })
+
+    }
+</script>
+</body>
+</html>
