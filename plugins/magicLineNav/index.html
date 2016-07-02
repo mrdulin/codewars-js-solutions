@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body{
+        font-family: 'Microsoft Yahei';
+    }
+
+    ul{list-style: none;}
+    a{text-decoration: none;}
+
+    .nav > li:not(.magic-line){
+        float: left;
+        padding: 15px 30px;
+    }
+
+    .nav > li.active > a{
+        /*color: lightgreen;*/
+    }
+
+    .nav a {
+        position: relative;
+        z-index: 200;
+        color: #fff;
+    }
+
+    .nav{
+        position: relative;
+        background-color: #000;
+        overflow: hidden;
+        padding: 0 20px;
+    }
+
+    .nav > .magic-line{
+        position: absolute;
+        bottom: 0;
+        height: 100%;
+        background-color: red;
+        -webkit-transition: left .2s linear;
+        -o-transition: left .2s linear;
+        transition: left .2s linear;
+        z-index: 100;
+    }
+    </style>
+</head>
+<body>
+<div id="container">
+    <ul class="nav">
+        <li class=""><a href="">angular</a></li>
+        <li class="active"><a href="">jquery</a></li>
+        <li><a href="">react</a></li>
+        <li><a href="">javascript</a></li>
+    </ul>
+</div>
+
+<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+<script>
+    $(function() {
+        var $nav = $('.nav');
+        var $magicLine = $('<li class="magic-line"></li>');
+        var $activeNav = $('.active', $nav);
+        $nav.append($magicLine);
+        $magicLine.width($activeNav.outerWidth())
+            .css('left', $activeNav.position().left);
+
+        $('a', $nav).hover(function(e) {
+            var $target = $(this);
+            console.log($target);
+            var $newActiveNav = $target.parent();
+            var newActiveNavWidth = $newActiveNav
+                            .addClass('active')
+                            .siblings()
+                            .removeClass('active')
+                            .end()
+                            .outerWidth();
+            console.log(newActiveNavWidth);
+            $magicLine.width(newActiveNavWidth).css('left', $newActiveNav.position().left);
+        });
+    });
+</script>
+</body>
+</html>
