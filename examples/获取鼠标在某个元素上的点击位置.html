@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <style>
+    .box{
+        width: 100px;
+        height: 100px;
+        margin-left: 110px;
+        text-align: center;
+    }
+
+    .box-red{
+        background-color: red;
+    }
+
+    .box-blue {
+        background-color: lightblue;
+    }
+
+    #fucking-chinese{
+        width: 50px;
+        height: 50px;
+        background-color: silver;
+        margin-left: 20px;
+    }
+    </style>
+</head>
+<body>
+<div class='box box-red'>
+    fucking china
+    <div id='fucking-chinese'></div>
+</div>
+
+<div class='box box-blue'>
+    <a href="http://www.google.com">google</a>
+</div>
+<script>
+    $(function() {
+        // $('#fucking-china').on('click', clickHandler);
+        //
+        // function clickHandler(e) {
+        //     var $target = $(e.target);
+        //     var offset = $target.offset();
+        //     var clickPos = {};
+        //
+        //     clickPos.x = e.pageX - offset.left;
+        //     clickPos.y = e.pageY - offset.top;
+        //
+        //     console.log(clickPos);
+        // }
+
+        $('.box').mousepos({
+            names: ['fucking-chinese', 'link'],
+            click: function(e, pos) {
+                console.log(e, pos);
+            }
+        }).css({
+            width: '200px',
+            height: '200px'
+        })
+
+    });
+
+    //plugin
+    (function($) {
+        $.fn.mousepos = function(options) {
+            var names = options.names || [];
+            var clickCallback = options.click;
+            var pos = {};
+
+            return this.each(function(index) {
+                $(this).on('click', {name: names[index]}, clickHandler);
+            });
+
+            function clickHandler(e) {
+                e.preventDefault();
+                var offset = $(e.target).offset();
+                var delegateOffset = $(e.delegateTarget).offset();
+                var name = e.data.name;
+                pos[name] = {};
+
+                $.extend(pos[name], {
+                    x: e.pageX - offset.left,
+                    y: e.pageY - offset.top,
+                    delegateX: e.pageX - delegateOffset.left,
+                    delegateY: e.pageX - delegateOffset.top
+                });
+
+                clickCallback && clickCallback.call(this, e, pos);
+            }
+
+        }
+    })(jQuery);
+</script>
+</body>
+</html>
