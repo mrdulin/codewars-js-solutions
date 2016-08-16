@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+
+<div>1</div>
+<div>2</div>
+<div>3</div>
+<div>4</div>
+<div>5</div>
+<div>6</div>
+
+<p>jquery</p>
+
+<script>
+    $(function() {
+        // var elStack = $([]).pushStack(document.getElementsByTagName('div'));
+        // var newStack = elStack.remove().end();
+        // console.log(elStack, newStack);
+        //
+        var $div = $('div').css({
+            width: '50px',
+            height: '50px',
+            border: '2px solid red'
+        })
+
+        var collection1 = $div.add('p').css('background-color', 'yellow');
+        console.log(collection1);
+
+        setTimeout(function() {
+            var collection2 = $div.pushStack($('p')).css('background-color', 'blue');
+            console.log(collection2);
+        }, 2000);
+
+        var domTobeInserted = $().add(document.createElement('a'))
+            .attr({href: 'http://www.google.com', target: '__blank'})
+            .text('google')
+            .appendTo(document.body);
+
+        console.log(domTobeInserted);
+
+    });
+</script>
+</body>
+</html>
