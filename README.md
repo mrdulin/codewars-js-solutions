@@ -1,1 +1,1 @@
-# jquery
+# Learn jQuery by examples
