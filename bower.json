@@ -1,9 +1,7 @@
 {
-  "name": "learn_jQuery",
-  "homepage": "https://github.com/Sspeed5cm/learn_jQuery",
-  "authors": [
-    "dulin <novaline@qq.com>"
-  ],
+  "name": "Training.jQuery",
+  "homepage": "https://github.com/mrdulin/Training.jQuery",
+  "authors": [],
   "description": "",
   "main": "",
   "moduleType": [],
