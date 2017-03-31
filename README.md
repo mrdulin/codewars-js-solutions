@@ -1,4 +1,1 @@
 # Learn jQuery by examples
-
-
-

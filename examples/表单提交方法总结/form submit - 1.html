@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>form submit - 1</title>
+    <link rel="stylesheet" href="../../bower_components/Materialize/dist/css/materialize.css"/>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../../bower_components/Materialize/dist/js/materialize.js"></script>
+</head>
+<body>
+<div class="container">
+    <!-- 第一种方式(原生表单提交) -->
+    <!-- form表单的action为请求的地址，method为请求的方式，enctype表单数据的编码格式(默认是application/x-www-form-urlencoded)-->
+    <!-- form表单中的input的name对应的值，就是要发送到服务器端的数据的字段。-->
+    <!-- 当enctype的编码格式为application/x-www-form-urlencoded，method为post时，下面的表单以Form Data的形式将数据发送到服务器端，Request URL:http://localhost:63342/learn_jQuery/data/data.json -->
+    <!-- 当enctype的编码格式为application/x-www-form-urlencoded，method为get时，下面的表单以Query String Parameters的形式将数据发送到服务器端，http://localhost:63342/learn_jQuery/data/data.json?first_name=&last_name=&password=&email=&action= -->
+    <!-- 当enctype的编码格式为multipart/form-data时，下面的表单以Request Payload（json）的形式将数据发送到服务器端，Request URL:http://localhost:63342/learn_jQuery/data/data.json，但一般只有在有type="file"的input时才用这种编码格式。要上传文件，method也应该使用post方式-->
+    <!-- 一般不使用enctype为text/plain的编码格式 -->
+
+
+    <!-- 注意：button提交按钮也有name属性，该属性对应的值在表单提交时也会被加入到数据的字段当中。-->
+    <div class="row">
+        <form action="../../data/data.json" method="post" class="col s12" enctype="application/x-www-form-urlencoded">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="first_name" type="text" placeholder="姓氏" class="validate" name="first_name"/>
+                    <label for="first_name">姓氏</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="last_name" type="text" placeholder="名字" class="validate" name="last_name"/>
+                    <label for="last_name">名字</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="disabled" type="text" value="不可编辑" class="validate" disabled/>
+                    <label for="disabled">不可编辑</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate" name="password"/>
+                    <label for="password">密码</label>
+                </div>
+                <div class="input-field col s12">
+                    <input type="text" id="email" class="validate" name="email"/>
+                    <label for="email">邮箱</label>
+                </div>
+            </div>
+            <!--<button type="submit" class="btn waves-effect waves-light" name="submit" value="someValue">-->
+                <!--提交-->
+            <!--</button>-->
+
+            <!-- 或者使用type类型为submit的input-->
+            <input type="submit" class="btn waves-light waves-effect" name="submit" value="提交"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>

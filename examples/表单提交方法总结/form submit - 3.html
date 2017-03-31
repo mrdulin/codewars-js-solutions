@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>form submit - 3</title>
+    <link rel="stylesheet" href="../../bower_components/Materialize/dist/css/materialize.css"/>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../../bower_components/Materialize/dist/js/materialize.js"></script>
+</head>
+<body>
+<div class="container">
+
+    <!-- 第三种方式 （使用jQuery提交表单）-->
+    <!-- 第三种方式的思路和第二种方式一样，只不过用了jQuery方法替代了原生的DOM方法 -->
+
+    <div class="row">
+        <form id="myForm" action="../../data/data.json" method="post" class="col s12" enctype="application/x-www-form-urlencoded">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="first_name" type="text" placeholder="姓氏" class="validate" name="first_name"/>
+                    <label for="first_name">姓氏</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="last_name" type="text" placeholder="名字" class="validate" name="last_name"/>
+                    <label for="last_name">名字</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="disabled" type="text" value="不可编辑" class="validate" disabled/>
+                    <label for="disabled">不可编辑</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate" name="password"/>
+                    <label for="password">密码</label>
+                </div>
+                <div class="input-field col s12">
+                    <input type="text" id="email" class="validate" name="email"/>
+                    <label for="email">邮箱</label>
+                </div>
+            </div>
+        </form>
+
+        <!-- 提交按钮放在了表单form元素外，并且可以使用任意元素。-->
+        <button id="submit" class="btn waves-light waves-effect">提交</button>
+        <p id="error" class="red-text text-darken-1"></p>
+    </div>
+</div>
+
+<script>
+    $(function() {
+
+        var $formElem = $('#myForm');
+        var $errorElem = $('#error');
+        var $submitElem = $('#submit');
+
+        $submitElem.click(submitHandler);
+
+        function submitHandler(e) {
+            var $firstNameElem = $('#first_name'),
+                $lastNameElem = $('#last_name'),
+                $passwordElem = $('#password'),
+                $emailElem = $('#email');
+
+            if(!$firstNameElem.val()) {
+                return showError($firstNameElem, '姓氏不能为空');
+            } else if(!$lastNameElem.val()) {
+                return showError($lastNameElem, '姓名不能为空');
+            } else if(!$passwordElem.val()) {
+                return showError($passwordElem, '密码不能为空');
+            } else if(!$emailElem.val()) {
+                return showError($emailElem, '邮箱不能为空');
+            } else {
+                hideError();
+                $formElem.submit();
+            }
+        }
+
+        function showError($inputElem, msg) {
+            $errorElem.text(msg);
+            $inputElem.focus();
+            return false;
+        }
+
+        function hideError() {
+            $errorElem.text('');
+        }
+
+    });
+</script>
+</body>
+</html>

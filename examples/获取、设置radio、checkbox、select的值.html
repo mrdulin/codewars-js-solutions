@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>.val()</title>
+    <link rel="stylesheet" href="../bower_components/Materialize/dist/css/materialize.css"/>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/Materialize/dist/js/materialize.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="input-field col s12">
+            <select id="single">
+                <option value="" disabled selected>选择所在城市</option>
+                <option value="shanghai">上海</option>
+                <option value="beijing">北京</option>
+                <option value="chengdu">成都</option>
+            </select>
+            <label for="single">城市</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <select id="multiple" multiple>
+                <option value="" disabled selected>选择你的爱好</option>
+                <option value="movie">电影</option>
+                <option value="cartoon">动漫</option>
+                <option value="game">游戏</option>
+            </select>
+            <label for="multiple">爱好</label>
+        </div>
+    </div>
+
+    <a id="setCity" class="waves-effect waves-light btn">定位为上海</a>
+    <a id="setHobby" class="waves-effect waves-light btn">默认爱好</a>
+
+    <div class="row">
+        <div class="col s12">
+            <form>
+                <p>
+                    <input name="group1" type="radio" id="test1" value="test1"/>
+                    <label for="test1">Red</label>
+                </p>
+
+                <p>
+                    <input name="group1" type="radio" id="test2" value="test2"/>
+                    <label for="test2">Yellow</label>
+                </p>
+
+                <p>
+                    <input class="with-gap" name="group1" type="radio" id="test3" value="test3"/>
+                    <label for="test3">Green</label>
+                </p>
+
+                <p>
+                    <input name="group1" type="radio" id="test4" disabled="disabled"/>
+                    <label for="test4">Brown</label>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <form>
+                <p>
+                    <input type="checkbox" id="test5" value="test5"/>
+                    <label for="test5">Red</label>
+                </p>
+
+                <p>
+                    <input type="checkbox" id="test6" value="test6"/>
+                    <label for="test6">Yellow</label>
+                </p>
+
+                <p>
+                    <input type="checkbox" id="test7" checked="checked" disabled="disabled" value=""/>
+                    <label for="test7">Green</label>
+                </p>
+
+                <p>
+                    <input type="checkbox" id="test8" disabled="disabled"/>
+                    <label for="test8">Brown</label>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        var $single = $('#single');
+        var $multiple = $('#multiple');
+        var $setCity = $('#setCity');
+        var $setHobby = $('#setHobby');
+        var $radios = $('input[type="radio"]');
+        var $checkboxs = $('input[type="checkbox"]');
+
+        $single.change(singleChangeHandler);
+        $multiple.change(multipleChangeHandler);
+        $setCity.click(reInit);
+        $setHobby.click(setHobbyHandler);
+        $radios.change(getRadioValue);
+        $checkboxs.change(getCheckboxValue);
+
+        initSelect();
+
+        function initSelect() {
+            $('select').material_select();
+        }
+
+        function getCheckboxValue() {
+            var $checkedBoxs = $checkboxs.filter(':checked');
+            var values = $checkedBoxs.map(function () {
+                return $(this).val();
+            }).get();
+            console.log(values);
+        }
+
+        function getRadioValue() {
+            var value = $radios.filter(':checked').val();
+            console.log(value);
+        }
+
+        function singleChangeHandler() {
+            var singleValue = $single.val();
+            console.log('singleValue:' + singleValue);
+        }
+
+        function multipleChangeHandler() {
+            var multipleValues = $multiple.val();
+            console.log(multipleValues);
+            console.log('multipleValues:' + multipleValues.join(','));
+        }
+
+        function setCityHandler() {
+            var selectClass = 'selected active';
+            var text = $single.val('shanghai').find('option:selected').text();
+            var $input = $single.prevAll('input.select-dropdown');
+            var $ul = $single.prevAll('ul.select-dropdown');
+            var $li = $ul.find('li:contains(' + text + ')');
+            $ul.children().removeClass(selectClass);
+            $li.siblings().removeClass(selectClass).end().addClass(selectClass);
+            $input.val(text);
+        }
+
+
+        function reInit() {
+            $single.val('shanghai');
+            initSelect();
+        }
+
+        function setHobbyHandler() {
+            $multiple.val(['game', 'movie']);
+            initSelect();
+        }
+
+    });
+</script>
+</body>
+</html>

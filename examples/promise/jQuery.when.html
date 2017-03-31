@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery.when</title>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+
+<script>
+    $(function () {
+
+        var request1 = $.ajax('../../data/request1.json');
+        var request2 = $.ajax('../../data/request2.json');
+
+        $.when(request1, request2)
+                .done(done)
+                .fail(fail);
+
+        //当两个promise都被resolve，则会执行done回调
+        //参数的顺序和传递给when方法的promise的顺序一致
+        function done(data1, data2) {
+            console.log(data1[0].name + ' ' + data2[0].name);
+        }
+
+        //当有任何一个promise被reject，则会执行fail回调
+        function fail() {
+            console.log('fail');
+        }
+
+        //e.g.
+        $.when('foo').done(function(data) {
+            console.log(data);
+        });
+
+        var promise = $.Deferred().resolve('google');
+        $.when(promise, 'good').done(function() {
+            console.log(arguments[0], arguments[1]);
+        });
+
+    });
+</script>
+</body>
+</html>

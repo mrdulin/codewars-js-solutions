@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>解决inline-block元素之间的空隙</title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <style>
+        span, ul > li {
+            display: inline-block;
+            width: 100px;
+            background: blue;
+            font-size: 30px;
+            color: white;
+            text-align: center;
+        }
+
+        #test2 {
+            font-size: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+<p>
+    <span> Foo </span>
+    <span> Bar </span>
+</p>
+
+
+<!-- 方法一 使用jQuery删除p元素下的文本节点-->
+<p id="test">
+    <span> Foo </span>
+    <span> Bar </span>
+</p>
+
+<!-- 方法二 移除span之间的空格 -->
+<p>
+    <span> Foo </span><span> Bar </span>
+</p>
+
+<!-- 方法三 将inline-block的父元素的font-size设置为0， 给inline-block的元素单独设置font-size -->
+<p id="test2">
+    <span> Foo </span>
+    <span> Bar </span>
+</p>
+
+<!-- 另外一个inline-block元素之间有空白的例子 -->
+<ul>
+    <li>item1</li>
+    <li>item2</li>
+    <li>item3</li>
+</ul>
+
+<!-- 解决方法一 -->
+<ul>
+    <li>Item 1
+    </li
+            >
+    <li>Item 2
+    </li
+            >
+    <li>Item 3</li>
+</ul>
+
+<!-- 解决方法二 -->
+<ul>
+    <li>Item 1</li>
+    <!--
+        -->
+    <li>Item 2</li>
+    <!--
+        -->
+    <li>Item 3</li>
+</ul>
+
+<!-- 解决方法三 -->
+<ul>
+    <li>Item 1
+    <li>Item 2
+    <li>Item 3
+</ul>
+
+<script>
+    $(function () {
+
+        $('#test')
+                .contents()
+                .filter(function () {
+                    //过滤出文本节点
+                    return this.nodeType === 3;
+                })
+                .remove();
+
+    });
+</script>
+</body>
+</html>

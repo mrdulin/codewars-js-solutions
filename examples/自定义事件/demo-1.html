@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo-1</title>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+
+<p></p>
+
+<div></div>
+
+<button type="button">trigger</button>
+
+<script>
+    $.ready.promise().done(onReady);
+
+    function onReady() {
+        //使用trigger方法基于任意DOM元素触发任何想要的事件
+        $('p, div').on('doSomething', function (e, data) {
+            $(this).text(data);
+        });
+
+        $('button').on('click', function () {
+            //update some view
+            $('p').trigger('doSomething', '无脑喷');
+            $('div').trigger('doSomething', '网易新闻');
+        });
+    }
+</script>
+</body>
+</html>
