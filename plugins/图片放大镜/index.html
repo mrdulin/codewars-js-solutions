@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>jQuery plugin_图片放大镜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .g-img-ct {
+            position: relative;
+            /*width: 600px;*/
+            /*height: 400px;*/
+            width: 450px;
+            height: 300px;
+        }
+        .m-img-box {
+            height: 100%;
+        }
+        .m-img-box > img {
+            width: 100%;
+            height: 100%;
+        }
+        .m-img-box > img:hover {
+            cursor: move;
+        }
+    </style>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+    <script src="./imgzoom.js"></script>
+</head>
+<body>
+<div id="j-img-ct" class="g-img-ct">
+    <div class="m-img-box">
+        <img src="http://7xp9vw.com1.z0.glb.clouddn.com/image%2F1.jpg"/>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#j-img-ct').imgZoom({
+            zoom: 2,
+            url: 'http://7xp9vw.com1.z0.glb.clouddn.com/image%2F1.jpg'
+        });
+    });
+</script>
+</body>
+</html>
