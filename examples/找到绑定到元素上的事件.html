@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button id='btn' type='button'>按钮</button>
+  <button id='btn2' type='button'>按钮2</button>
+  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script>
+    $(function() {
+      var doc = document;
+      var $dom_btn = $('#btn');
+      var $dom_btn_v2 = $('#btn2');
+
+      $dom_btn.on({
+        click: handleClick,
+        mouseleave: handleMouseLeave
+      });
+
+      $dom_btn_v2.bind('click', function(e) {
+        alert('click');
+      }).mouseover(function(e) {
+        alert('mouseover');
+      });
+
+      //通过dom addEventListener绑定的事件, 通过$._data拿不到
+      $dom_btn[0].addEventListener('mouseover', handleMouseOver, false);
+
+      function handleMouseOver(e) {
+        alert('mouseover');
+      }
+
+      function handleClick() {
+        alert('click');
+      }
+
+      function handleMouseLeave() {
+        alert('mouseleave');
+      }
+
+      //使用$._data可以拿到通过jQuery的方法绑定的事件
+      const eventMap = $._data($dom_btn[0], 'events');
+      const events = $._data($dom_btn[0]).events;
+
+      console.log('btn_eventMap get by $._data', eventMap);
+      console.log('btn_events get by $._data', events);
+
+      console.log('btn_eventMap get by $.data,', $.data($dom_btn[0], events));
+
+      const btnV2_events = $._data($dom_btn_v2[0], 'events');
+      console.log('btnV2_events', btnV2_events);
+
+    });
+  </script>
+</body>
+</html>
