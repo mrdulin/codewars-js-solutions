@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    .message {
+      line-height: 40px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class='rolling'>
+
+    <div class="rolling-container">
+      <div class="rolling-wrapper">
+
+      </div>
+    </div>
+  </div>
+
+  <script src="./message.js"></script>
+  <script type='x-template' id='rolling-slide'>
+    <div class='message'>
+      <p name='textContent'></p>
+    </div>
+  </script>
+  <script>
+
+    window.onload = function () {
+      const doc = document;
+      const dom = {};
+
+      dom.wrapper = doc.querySelector('.rolling-wrapper');
+
+      const datas = [
+        { textContent: 'angular' },
+        { textContent: 'react' },
+        { textContent: 'rxjs' },
+        { textContent: 'jquery' },
+        { textContent: 'javascript' }
+      ];
+
+      var rolling = new Rolling(dom.wrapper, {
+        items: datas,
+        // childClassName: 'message',
+        // childHtmlString: doc.getElementById('rolling-slide').innerHTML,
+        children: datas.map((data, index) => {
+          return `
+           <div>
+              <p>${data.textContent}</p>
+              <p>${data.textContent}</p>
+           </div>
+          `
+        }),
+        style: {
+          height: '40px'
+        }
+      });
+
+    };
+  </script>
+</body>
+
+</html>
