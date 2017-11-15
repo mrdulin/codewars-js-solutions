@@ -49,7 +49,13 @@
         const target = e.target;
         const value = target.value;
         dom.cityLabel.textContent = value;
-        dom.myAppIframe.contentWindow.postMessage({ city: value }, myAppOrigin);
+        dom.myAppIframe.contentWindow.postMessage({
+          action: 'city-select',
+          payload: {
+            city: value,
+            origin: myAppOrigin
+          }
+        }, myAppOrigin);
       }, false);
 
       dom.giveMoney.addEventListener('click', (e) => {
@@ -75,6 +81,7 @@
           switch (data.action) {
             case 'receive-money-success':
               dom.thanksMessage.textContent = data.payload.message;
+              break;
             default:
               break;
           }
