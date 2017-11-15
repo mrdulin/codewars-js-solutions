@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>主应用</title>
+</head>
+
+<body>
+  <header id='header'>主应用header</header>
+  <p>
+    当前城市：
+    <span id='city-label'></span>
+  </p>
+  <article>
+    <section>
+      <select name="city" id="city-select">
+        <option value="">-- 请选择城市 --</option>
+        <option value="上海">上海</option>
+        <option value="北京">北京</option>
+      </select>
+    </section>
+    <button type='button' id='give-money'>给other子应用送钱</button>
+    <iframe id='my-app-iframe' src="http://127.0.0.1:2224"></iframe>
+    <iframe id='other-app-iframe' src="http://127.0.0.1:2225"></iframe>
+    <p id='callback-output'></p>
+    <p id='thanks-message'></p>
+  </article>
+  <script src="https://cdn.staticfile.org/babel-standalone/6.24.0/babel.min.js"></script>
+  <script>
+    window.onload = function () {
+      const doc = document;
+      const dom = {
+        select: doc.getElementById('city-select'),
+        myAppIframe: doc.getElementById('my-app-iframe'),
+        otherAppIframe: doc.getElementById('other-app-iframe'),
+        callbackOutput: doc.getElementById('callback-output'),
+        cityLabel: doc.getElementById('city-label'),
+        giveMoney: doc.getElementById('give-money'),
+        thanksMessage: doc.getElementById('thanks-message')
+      };
+      const mainAppOrigin = window.location.origin;
+      const myAppOrigin = 'http://127.0.0.1:2224';
+      const otherAppOrigin = 'http://127.0.0.1:2225';
+
+      dom.select.addEventListener('change', (e) => {
+        const target = e.target;
+        const value = target.value;
+        dom.cityLabel.textContent = value;
+        dom.myAppIframe.contentWindow.postMessage({ city: value }, myAppOrigin);
+      }, false);
+
+      dom.giveMoney.addEventListener('click', (e) => {
+        dom.otherAppIframe.contentWindow.postMessage({
+          action: 'give-money',
+          payload: {
+            money: Math.round(Math.random() * 100),
+            origin: mainAppOrigin
+          }
+        }, otherAppOrigin);
+      }, false);
+
+      window.addEventListener('message', function (event) {
+        var origin = event.origin;
+        var data = event.data;
+        if (origin === myAppOrigin) {
+          if (data.message) {
+            dom.callbackOutput.textContent = '开始执行回调...';
+          }
+        }
+
+        if (origin === otherAppOrigin) {
+          switch (data.action) {
+            case 'receive-money-success':
+              dom.thanksMessage.textContent = data.payload.message;
+            default:
+              break;
+          }
+        }
+      }, false);
+
+    }
+  </script>
+</body>
+
+</html>
