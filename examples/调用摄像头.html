@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>调用摄像头</title>
+</head>
+
+<body>
+  <video id='video' autoplay style='width: 100%'></video>
+  <div>
+    <button id="front-camera" type="button">前置摄像头</button>
+    <button id='back-camera' type='button'>后置摄像头</button>
+    <button id='capture' type="button">拍照</button>
+  </div>
+  <canvas id='canvas' style='width: 100%'></canvas>
+  <script src="https://cdn.staticfile.org/babel-standalone/6.24.0/babel.min.js"></script>
+  <script>
+    //测试环境：
+    // 小米4，chrome, android6.0.1,
+    // Max OSX, chrome 62.0.3202.94,
+    // 必须使用https协议或者localhost才可以正常使用此API
+    // 参考链接：https://developers.google.com/web/updates/2015/10/chrome-47-webrtc?hl=en
+
+    function getUserMedia(constraints, success, error) {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
+      } else if (navigator.webkitGetUserMedia) {
+        navigator.webkitGetUserMedia(constraints, success, error);
+      } else if (navigator.getUserMedia) {
+        navigator.getUserMedia(constraints, success, error);
+      } else {
+        alert('不支持getUserMedia');
+      }
+    };
+
+
+    window.onerror = (message) => {
+      alert(message);
+    }
+    window.onload = () => {
+      const doc = document;
+      const dom = {};
+      dom.video = doc.getElementById('video');
+      dom.capture = doc.getElementById('capture');
+      dom.canvas = doc.getElementById('canvas');
+      dom.frontCamera = doc.getElementById('front-camera');
+      dom.backCamera = doc.getElementById('back-camera');
+
+      const constraints = {
+        video: { width: 480, height: 320, facingMode: null }
+      };
+
+      dom.frontCamera.addEventListener('click', () => {
+        constraints.video.facingMode = 'user';
+        getUserMedia(constraints, success, error);
+      }, false);
+
+      dom.backCamera.addEventListener('click', () => {
+        constraints.video.facingMode = { exact: 'environment' };
+        getUserMedia(constraints, success, error);
+      })
+
+      dom.capture.addEventListener('click', () => {
+        const context = dom.canvas.getContext('2d');
+        context.drawImage(dom.video, 0, 0);
+      }, false);
+
+      function success(stream) {
+        const compatibleURL = window.URL || window.webKitURL;
+        dom.video.src = window.URL.createObjectURL(stream);
+        dom.video.play();
+      }
+
+      function error(error) {
+        console.log('访问用户媒体设备失败： ', error.name, error.message);
+      }
+    }
+  </script>
+</body>
+
+</html>
