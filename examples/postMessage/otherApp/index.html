@@ -21,10 +21,11 @@
         money: doc.getElementById('money')
       };
       const thankMessages = ['谢谢', '继续送，不要停', '大吉大利，继续送钱'];
+      const mainAppOrigin = 'http://127.0.0.1:2223';
 
       window.addEventListener('message', (event) => {
         const origin = event.origin;
-        if (origin === event.data.payload.origin) {
+        if (origin === mainAppOrigin) {
           const currentMoneyNum = Number.parseInt(dom.money.textContent.replace('￥', ''));
           const nextMoneyNum = currentMoneyNum + event.data.payload.money;
           dom.money.textContent = `￥${nextMoneyNum}`;
@@ -33,7 +34,7 @@
             payload: {
               message: thankMessages[Math.floor(Math.random() * 3)]
             }
-          }, event.data.payload.origin);
+          }, mainAppOrigin);
         }
 
       }, false);

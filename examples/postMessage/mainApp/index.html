@@ -21,12 +21,14 @@
         <option value="上海">上海</option>
         <option value="北京">北京</option>
       </select>
+      <iframe id='my-app-iframe' src="http://127.0.0.1:2224"></iframe>
+      <p id='callback-output'></p>
     </section>
-    <button type='button' id='give-money'>给other子应用送钱</button>
-    <iframe id='my-app-iframe' src="http://127.0.0.1:2224"></iframe>
-    <iframe id='other-app-iframe' src="http://127.0.0.1:2225"></iframe>
-    <p id='callback-output'></p>
-    <p id='thanks-message'></p>
+    <section>
+      <button type='button' id='give-money'>给other子应用送钱</button>
+      <iframe id='other-app-iframe' src="http://127.0.0.1:2225"></iframe>
+      <p id='thanks-message'></p>
+    </section>
   </article>
   <script src="https://cdn.staticfile.org/babel-standalone/6.24.0/babel.min.js"></script>
   <script>
@@ -52,8 +54,7 @@
         dom.myAppIframe.contentWindow.postMessage({
           action: 'city-select',
           payload: {
-            city: value,
-            origin: myAppOrigin
+            city: value
           }
         }, myAppOrigin);
       }, false);
@@ -62,8 +63,7 @@
         dom.otherAppIframe.contentWindow.postMessage({
           action: 'give-money',
           payload: {
-            money: Math.round(Math.random() * 100),
-            origin: mainAppOrigin
+            money: Math.round(Math.random() * 100)
           }
         }, otherAppOrigin);
       }, false);

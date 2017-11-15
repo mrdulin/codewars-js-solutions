@@ -18,27 +18,25 @@
       const dom = {
         cityLabel: doc.getElementById('city-label')
       };
-      // const mainAppOrigin = 'http://127.0.0.1:2223';
+      const mainAppOrigin = 'http://127.0.0.1:2223';
 
       window.addEventListener('message', function (event) {
         const baseTextContent = 'my子应用接收到来自主应用的消息: ';
         var origin = event.origin;
         var data = event.data;
-
-        if (origin === data.payload.origin) {
+        if (origin === mainAppOrigin) {
           switch (data.action) {
             case 'city-select':
               setTimeout(() => {
                 dom.cityLabel.textContent = `${baseTextContent}${data.payload.city}`;
-                // event.source.postMessage({ message: '已经收到城市消息，可以执行你的回调' }, event.origin);
+                // event.source.postMessage({ message: '已经收到城市消息，可以执行你的回调' }, mainAppOrigin);
                 // 或者
-                window.parent.postMessage({ message: '已经收到城市消息，可以执行你的回调' }, event.origin)
+                window.parent.postMessage({ message: '已经收到城市消息，可以执行你的回调' }, mainAppOrigin)
               }, 2000);
               break;
             default:
               break;
           }
-
         }
       }, false);
     }
