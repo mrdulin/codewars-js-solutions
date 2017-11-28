@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>This is page a</h1>
+  <script>
+    function nextTick(cb) {
+      setTimeout(cb, 0);
+    }
+    window.onload = function () {
+      const hash = 'noBack'
+      window.location.hash = '';
+      nextTick(function () {
+        window.location.hash = hash;
+      });
+      window.addEventListener('hashchange', function (evt) {
+        console.log(evt);
+        const newURL = evt.newURL;
+        const oldURL = evt.oldURL;
+
+        if (newURL.indexOf(hash) === -1 && oldURL.indexOf(hash) !== -1) {
+          window.location.replace('./b.html');
+        }
+      }, false);
+    };
+  </script>
+</body>
+
+</html>
