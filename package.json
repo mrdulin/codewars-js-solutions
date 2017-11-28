@@ -7,7 +7,8 @@
     "example": "examples"
   },
   "scripts": {
-    "start": "http-server ./examples -o -c-1 -p 2223"
+    "start": "http-server ./examples -o -c-1 -p 2223",
+    "server2": "http-server ./examples -o -c-1 -p 2224"
   },
   "repository": {
     "type": "git",
