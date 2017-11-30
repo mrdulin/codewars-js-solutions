@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>index</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+      padding: 10px;
+    }
+
+    li {
+      height: 100px;
+      border: 1px solid #ddd;
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='app'>
+    <ul class="list"></ul>
+  </div>
+
+  <script>
+    (function () {
+      const PAGE_CACHE_KEY = 'html$demo-3$Index';
+      let elementEventMapCache = {};
+
+      var $ = function (selector) {
+        return document.querySelector(selector);
+      }
+
+      function request() {
+        return new Promise((resolve, reject) => {
+          setTimeout(resolve, 2000, 10);
+        });
+      }
+      window.onload = function () {
+        const list = $('ul');
+        const app = $('#app');
+
+        const events = {
+          '.list': {
+            event: 'click',
+            handler: function (e) {
+              console.log(e);
+            }
+          }
+        };
+
+        const pageCache = getPageCache();
+        if (pageCache) {
+          render(app, pageCache, true);
+          bindEvents(events);
+        } else {
+          request().then(function (res) {
+            render(list, res);
+            setPageCache();
+            bindEvents(events);
+          });
+        }
+
+      }
+
+      function bindEvents(elementEventMap) {
+        handleEvents(elementEventMap);
+      }
+
+      function removeEvents() {
+        handleEvents(elementEventMapCache, true);
+      }
+
+      function handleEvents(elementEventMap, remove) {
+        const methodName = remove ? 'removeEventListener' : 'addEventListener';
+        elementEventMapCache = elementEventMap;
+        Object.keys(elementEventMap).forEach((selector) => {
+          const meta = elementEventMap[selector];
+          let dom = meta._el ? meta._el : $(selector);
+          elementEventMapCache[selector]._el = dom;
+          dom[methodName](meta.event, meta.handler, !!meta.capture);
+        });
+      }
+
+      function render(el, data, cache) {
+        if (cache) {
+          el.innerHTML = data;
+          return;
+        }
+        const fragment = document.createDocumentFragment();
+        for (var i = 0; i < data; i++) {
+          const li = document.createElement('li');
+          if (i === 9) {
+            const link = document.createElement('a');
+            const linkTextContent = 'page a';
+            const linkHref = './a.html';
+            link.textContent = linkTextContent;
+            link.href = linkHref;
+            li.appendChild(link);
+          } else {
+            li.textContent = i;
+          }
+          fragment.appendChild(li);
+        }
+        el.appendChild(fragment);
+      }
+
+      function setPageCache() {
+        const appDiv = $('#app');
+        const appHtml = appDiv.innerHTML.trim();
+        localStorage.setItem(PAGE_CACHE_KEY, appHtml);
+      }
+
+      function getPageCache() {
+        return localStorage.getItem(PAGE_CACHE_KEY);
+      }
+    })();
+  </script>
+</body>
+
+</html>
