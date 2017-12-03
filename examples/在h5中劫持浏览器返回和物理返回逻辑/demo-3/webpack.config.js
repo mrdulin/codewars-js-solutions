@@ -1,23 +1,36 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
+const util = require('util');
+
+console.inspect = function (obj, depth = 3) {
+  console.log(util.inspect(obj, { showHidden: true, depth }));
+}
+
+const dist = 'dist';
+const ports = [2223, 2224];
 
 const baseConfig = {
-  dist: 'dist',
+  entry: {
+    vendor: [
+      'react'
+    ]
+  },
   plugins: [
-    new CleanWebpackPlugin([baseConfig.dist])
+    new CleanWebpackPlugin([dist])
   ],
   module: {
     rules: [
       {
-        text: /\.js$/,
+        test: /\.js$/,
         exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
           options: {
-            preset: [
+            presets: [
               'env',
               'react'
             ]
@@ -25,15 +38,17 @@ const baseConfig = {
         }
       }
     ]
-  }
+  },
+  devtool: 'eval-source-map'
 };
 
 function produceConfig(appDirs) {
-  return appDirs.map((dir) => {
+  return appDirs.map((dir, idx) => {
+    const entry = path.resolve(__dirname, dir);
     return {
-      entry: path.resolve(__dirname, dir),
+      entry,
       output: {
-        path: path.resolve(__dirname, dir, baseConfig.dist),
+        path: path.resolve(__dirname, dir, dist),
         filename: '[name].js',
         pathinfo: true
       },
@@ -41,8 +56,11 @@ function produceConfig(appDirs) {
         rules: baseConfig.module.rules.concat([])
       },
       plugins: baseConfig.plugins.concat([
-        new HtmlWebpackPlugin(),
-      ])
+        new HtmlWebpackPlugin({
+          template: entry + '/index.html'
+        })
+      ]),
+      devServer: baseConfig.devServer
     };
   });
 }
@@ -62,14 +80,41 @@ function getAppDirectoryNames() {
   return appDirs;
 }
 
+const appDirs = getAppDirectoryNames();
+const configs = produceConfig(appDirs);
+const multipleCompiler = webpack(configs)
+const compilers = multipleCompiler.compilers;
+
 function run() {
-  const appDirs = getAppDirectoryNames();
-  const configs = produceConfig(appDirs);
-  webpack(configs, (err, stats) => {
-    if (err) {
-      throw err;
-    }
+  compilers.forEach((compiler) => {
+    compiler.run((err, stats) => {
+      if (err || stats.hasErrors()) {
+        throw err;
+      }
+    })
   });
 }
 
-run();
+function server() {
+  compilers.forEach((compiler, idx) => {
+    const port = ports[idx];
+    const server = new WebpackDevServer(compiler, {
+      contentBase: compiler.options.entry + '/tmp',
+      compress: true,
+      host: '0.0.0.0',
+      stats: {
+        colors: true
+      },
+      port
+    });
+    server.listen(port, 'localhost', (error) => {
+      if (error) {
+        throw error;
+      }
+      console.log(`${appDirs[idx]}服务器启动成功 -> http://localhost:${port}`);
+    });
+  });
+}
+
+// run();
+server();
