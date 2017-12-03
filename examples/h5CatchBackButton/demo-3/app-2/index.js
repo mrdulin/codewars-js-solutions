@@ -1,7 +1,10 @@
 import React from 'react';
-import { HashRouter, Link } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import { render } from 'react-dom';
+
+// import Home from './HomeA';
+import Home from './HomeB';
 
 const App = (props) => {
   return (
@@ -11,17 +14,9 @@ const App = (props) => {
   );
 }
 
-const Home = () => (
+const SomePage = () => (
   <div>
-    <h2>app-1 home</h2>
-    <Link to='/about'>About</Link>
-  </div>
-)
-
-const About = () => (
-  <div>
-    <h2>app-1 about</h2>
-    <a href='//localhost:2224'>app-2 home</a>
+    <h2>app-2 some page</h2>
   </div>
 )
 
@@ -30,7 +25,7 @@ render(
     <HashRouter>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/about" component={About} />
+        <Route exact path="/somePage" component={SomePage} />
       </Switch>
     </HashRouter>
   </App>,

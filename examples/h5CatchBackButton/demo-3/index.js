@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
+const = require('')
 
 console.inspect = function (obj, depth = 3) {
   console.log(util.inspect(obj, { showHidden: true, depth }));
@@ -88,9 +89,17 @@ const compilers = multipleCompiler.compilers;
 function run() {
   compilers.forEach((compiler) => {
     compiler.run((err, stats) => {
-      if (err || stats.hasErrors()) {
-        throw err;
+      if (err) {
+        console.error(err.stack || err);
+        if (err.details) {
+          console.error(err.details);
+        }
+        return;
       }
+
+      console.log(stats.toString({
+        colors: true
+      }))
     })
   });
 }
@@ -116,5 +125,5 @@ function server() {
   });
 }
 
-// run();
-server();
+exports.server = server;
+exports.run = run;

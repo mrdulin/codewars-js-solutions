@@ -3,31 +3,40 @@ import React from 'react';
 class HomeB extends React.Component {
   constructor(...args) {
     super(...args);
-    this.catchBackButton = this.catchBackButton.bind(this);
+    this.catchBackButtonHandle = this.catchBackButtonHandle.bind(this);
     this.currentHash = '';
+    this.catchBackButtonQuery = 'cbb=1';
   }
   componentWillMount() {
+    const searchObj = this.queryParse(window.location.search);
+    console.log('searchObj', searchObj);
+    if (!searchObj.returnUrl) {
+      this.catchBackButton();
+    }
+  }
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this.catchBackButtonHandle, false);
+  }
+
+  catchBackButton() {
     this.currentHash = window.location.hash
     window.location.hash = this.currentHash;
     nextTick(() => {
-      window.location.hash = `${this.currentHash}?cbb=1`;
+      window.location.hash = `${this.currentHash}?${this.catchBackButtonQuery}`;
     });
-    window.addEventListener('hashchange', this.catchBackButton, false);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('hashchange', this.catchBackButton, false);
+    window.addEventListener('hashchange', this.catchBackButtonHandle, false);
   }
 
-  catchBackButton(e) {
+  catchBackButtonHandle(e) {
     console.log(e);
     const { newURL, oldURL } = e;
-    if (window.location.href === newURL && oldURL.indexOf('?cbb=1') !== -1) {
+    if (window.location.href === newURL && oldURL.indexOf(`?${this.catchBackButtonQuery}`) !== -1) {
       this.props.history.replace('/somePage');
     }
   }
 
-  getHashQuery(hash) {
-    const queryString = hash.split('?')[1];
+  queryParse(qs) {
+    const queryString = qs.split('?')[1];
     if (queryString) {
       const querys = queryString.split('&');
       return querys.reduce((pre, cur) => {
