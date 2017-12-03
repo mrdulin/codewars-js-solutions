@@ -5,7 +5,6 @@ const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
-const = require('')
 
 console.inspect = function (obj, depth = 3) {
   console.log(util.inspect(obj, { showHidden: true, depth }));

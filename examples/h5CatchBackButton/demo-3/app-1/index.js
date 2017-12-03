@@ -3,7 +3,7 @@ import { HashRouter, Link } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import { render } from 'react-dom';
 
-cons App = (props) => {
+const App = (props) => {
   return (
     <div>
       {props.children}
