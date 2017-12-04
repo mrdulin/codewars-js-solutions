@@ -10,6 +10,29 @@ console.inspect = function (obj, depth = 3) {
   console.log(util.inspect(obj, { showHidden: true, depth }));
 }
 
+const cliOptions = {
+  progress: {
+    type: 'boolean',
+    desc: '实时打印构建进度'
+  },
+  profile: {
+    type: 'boolean',
+    desc: '打印构建时间'
+  }
+};
+const cliOptionKeys = Object.keys(cliOptions);
+
+const args = process.argv.slice(2);
+const argv = args.reduce((pre, cur) => {
+  const optionKey = cur.slice(2);
+  if (cliOptionKeys.indexOf(optionKey) !== -1) {
+    pre[optionKey] = true;
+    return pre;
+  }
+  return pre;
+}, {});
+console.log('argv: ', argv);
+
 const dist = 'dist';
 const ports = [2223, 2224];
 
@@ -86,7 +109,13 @@ const multipleCompiler = webpack(configs)
 const compilers = multipleCompiler.compilers;
 
 function run() {
-  compilers.forEach((compiler) => {
+  compilers.forEach((compiler, idx) => {
+    console.log(`开始构建${appDirs[idx]}...`)
+    if (argv.progress) {
+      compiler.apply(new webpack.ProgressPlugin({
+        profile: argv.profile
+      }));
+    }
     compiler.run((err, stats) => {
       if (err) {
         console.error(err.stack || err);
@@ -97,14 +126,22 @@ function run() {
       }
 
       console.log(stats.toString({
-        colors: true
+        colors: true,
+        chunks: false
       }))
-    })
+    });
+    console.log(`${appDirs[idx]}构建完成。`);
   });
 }
 
 function server() {
   compilers.forEach((compiler, idx) => {
+    if (argv.progress) {
+      compiler.apply(new webpack.ProgressPlugin({
+        profile: argv.profile
+      }));
+    }
+
     const port = ports[idx];
     const server = new WebpackDevServer(compiler, {
       contentBase: compiler.options.entry + '/tmp',
