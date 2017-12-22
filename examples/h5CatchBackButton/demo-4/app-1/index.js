@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
-import { Switch, Route } from 'react-router';
+import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
 import { render } from 'react-dom';
 
 const hostname = window.location.hostname;

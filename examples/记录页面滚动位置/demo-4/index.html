@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+      padding: 10px;
+    }
+
+    li {
+      height: 100px;
+      border: 1px solid #ddd;
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- 静态页面可以完美的保持视图滚动位置 -->
+  <!-- <ul>
+    <li>react</li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li><a href="//google.com" target='view_window'>google</a></li>
+    <li><a href="//github.com" target='view_window'>github</a></li>
+  </ul> -->
+
+  <!-- 动态生成视图 -->
+  <ul id='list'>
+
+  </ul>
+  <script>
+    window.onload = function () {
+      var doc = document;
+      var $list = doc.getElementById('list');
+
+      function request() {
+        //用来测试从打开的页面返回时，是否重新执行了代码。
+        //测试结果：没有弹出alert
+        alert('request');
+        setTimeout(() => {
+          render();
+        }, 1000);
+      }
+
+      function render() {
+        for (var i = 0; i < 10; i++) {
+          var $li = doc.createElement('li');
+          var $link = doc.createElement('a');
+
+          $link.textContent = i;
+          if (i === 9) {
+            $link.textContent = 'github';
+            $link.href = '//github.com';
+            $link.target = 'view_window';
+          }
+
+          $li.appendChild($link);
+          $list.appendChild($li);
+        }
+      }
+
+      request();
+
+    };
+
+  </script>
+</body>
+
+</html>
