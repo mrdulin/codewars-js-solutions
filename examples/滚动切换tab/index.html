@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 45px;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      z-index: 1;
+    }
+
+    .main {
+      position: absolute;
+      top: 46px;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: #eee;
+      overflow: auto;
+    }
+
+    .banner {
+      height: 200px;
+    }
+
+    .tab-list {
+      display: flex;
+      background-color: #fff;
+    }
+
+    .tab-item {
+      flex: 1;
+      text-align: center;
+      line-height: 30px;
+    }
+
+    .tab-item>a {
+      display: block;
+      height: 100%;
+    }
+
+    .tab-item-active {
+      background-color: red;
+      color: #fff;
+    }
+
+    .data-list {
+      overflow: hidden;
+    }
+
+    .data-item {
+      float: left;
+      width: 50%;
+      height: 100px;
+      padding: 10px;
+      box-sizing: border-box;
+      background-color: #fff;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section {
+      padding: 10px 0;
+    }
+
+    .aside-fixed {
+      display: none;
+      height: 30px;
+    }
+
+    .aside-fixed.aside-show {
+      display: block;
+    }
+
+    .aside.aside-show {
+      position: fixed;
+      top: 46px;
+      left: 0;
+      width: 100%;
+      z-index: 1;
+    }
+
+  </style>
+</head>
+
+<body>
+  <header class="header">header</header>
+  <main class="main">
+    <section class="banner">
+      <h1>Banner</h1>
+    </section>
+    <aside class="aside">
+      <ul class="tab-list">
+        <li data-id='mobile' class="tab-item">
+          <a>手机</a>
+        </li>
+        <li data-id='3c' class="tab-item">
+          <a>数码3C</a>
+        </li>
+        <li data-id='electric' class="tab-item">
+          <a>家用电器</a>
+        </li>
+        <li data-id='book' class="tab-item">
+          <a>图书影音</a>
+        </li>
+      </ul>
+    </aside>
+    <aside class="aside-fixed">
+      <!-- <ul class="tab-list">
+        <li data-id='mobile' class="tab-item">
+          <a>手机</a>
+        </li>
+        <li data-id='3c' class="tab-item">
+          <a>数码3C</a>
+        </li>
+        <li data-id='electric' class="tab-item">
+          <a>家用电器</a>
+        </li>
+        <li data-id='book' class="tab-item">
+          <a>图书影音</a>
+        </li>
+      </ul> -->
+    </aside>
+
+    <article class="content">
+      <section class="section">
+        <h2 id='mobile' class="section-title">手机</h2>
+        <ul class='data-list'>
+          <li class="data-item">iPhoneX</li>
+          <li class="data-item">iPhone8P</li>
+          <li class="data-item">iPhone8</li>
+          <li class="data-item">iPhone7P</li>
+          <li class="data-item">iPhone7</li>
+        </ul>
+      </section>
+      <section class="section">
+        <h2 class="section-title">数码3C</h2>
+        <ul class='data-list'>
+          <li class="data-item">iPhoneX</li>
+          <li class="data-item">iPhone8P</li>
+          <li class="data-item">iPhone8</li>
+          <li class="data-item">iPhone7P</li>
+          <li class="data-item">iPhone7</li>
+        </ul>
+      </section>
+
+    </article>
+  </main>
+  <script src="./index.js"></script>
+</body>
+
+</html>
