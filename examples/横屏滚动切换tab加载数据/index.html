@@ -24,7 +24,6 @@
       list-style: none;
     }
 
-
     .header {
       position: absolute;
       top: 0;
@@ -46,41 +45,58 @@
       background: #eee;
     }
 
-    .tab-list {
+    .tabs {
       z-index: 1;
       position: absolute;
       top: 46px;
       left: 0;
       width: 100%;
       background-color: #fff;
-      display: flex;
-    }
-
-    .tab-list>li {
-      flex: 1;
-      text-align: center;
+      height: 44px;
       line-height: 44px;
     }
 
-    .swiper-container {
-      width: 600px;
-      height: 300px;
+    .tab-item:first-child:before {
+      content: '';
     }
 
-    .content {}
+    .tab-item {
+      display: inline-block;
+      text-align: center;
+    }
+
+    .tab-cursor {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background-color: #007aff;
+      transition: transform .3s ease-in-out, left .3s ease-in-out;
+    }
+
+    .tab-item.tab-item-active {
+      color: #007aff;
+    }
+
+    .swiper-container {
+      height: 100%;
+    }
+
+    .content {
+      height: 100%;
+    }
 
   </style>
 </head>
 
 <body>
   <header class="header">header</header>
-  <ul class="tab-list">
-    <li>tab1</li>
-    <li>tab2</li>
-    <li>tab3</li>
-  </ul>
-  <main class="main">
 
+  <div class="tabs">
+    <ul class="tab-list"></ul>
+    <i class="tab-cursor"></i>
+  </div>
+  <main class="main">
     <article class="content">
       <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -91,7 +107,7 @@
       </div>
     </article>
   </main>
-  <script src="https://cdn.bootcss.com/Swiper/4.1.0/js/swiper.min.js"></script>
+  <script src="//cdn.bootcss.com/Swiper/4.1.0/js/swiper.min.js"></script>
   <script src="./index.js"></script>
 </body>
 
