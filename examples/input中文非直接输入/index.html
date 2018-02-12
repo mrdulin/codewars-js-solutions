@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <input id='ipt' type="text" placeholder="输入文本">
+  <script>
+    window.onload = function () {
+      const doc = document;
+      const $input = doc.getElementById('ipt');
+      let inputLock = false;
+
+      function handleValue(inputElement) {
+        var regex = /[^1-9a-zA-Z]/g;
+        inputElement.value = inputElement.value.replace(regex, '');
+      }
+
+      $input.addEventListener('input', function (event) {
+        if (!inputLock) {
+          handleValue(event.target);
+          event.returnValue = false;
+        }
+      });
+
+      $input.addEventListener('compositionstart', function () {
+        console.log('compositionstart')
+        inputLock = true;
+      });
+
+      $input.addEventListener('compositionend', function (event) {
+        console.log('compositionend')
+        inputLock = false;
+        handleValue(event.target);
+      });
+
+      //https://developer.mozilla.org/zh-CN/docs/Web/Events/change
+      // $input.addEventListener('change', function (e) {
+      //   console.log('change');
+      // });
+
+    }
+  </script>
+</body>
+
+</html>
