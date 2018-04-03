@@ -1,4 +1,4 @@
-# Learn jQuery by examples
+## http-server 使用 https
 
 "start": "http-server ./examples -o -c-1 -S -C ./ssl/server.crt -K ./ssl/server.pem -p 2223"
 
